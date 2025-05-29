@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Farm - {{ place }}</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #e6f0ff;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      background: #0077cc;
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    .content {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      text-align: center;
+    }
+
+    .farm-button {
+      width: 100%;
+      padding: 10px;
+      background: #005fa3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 8px 0;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .farm-button:hover {
+      background: #004080;
+    }
+
+    #add-farm-form {
+      margin-top: 20px;
+      display: none; /* hidden initially */
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"], #show-form-btn {
+      width: 100%;
+      padding: 10px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover, #show-form-btn:hover {
+      background: #005fa3;
+    }
+  </style>
+  <script>
+    function toggleForm() {
+      const form = document.getElementById('add-farm-form');
+      const btn = document.getElementById('show-form-btn');
+      if (form.style.display === 'none') {
+        form.style.display = 'block';
+        btn.textContent = 'Cancel';
+      } else {
+        form.style.display = 'none';
+        btn.textContent = 'Add New Farm';
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    Add Farm - {{ place }}
+  </header>
+
+  <div class="content">
+    <h3>Farms in {{ place }}</h3>
+
+    {% if farms %}
+      {% for farm in farms %}
+        <a href="{{ url_for('farm_customers', place=place, farm_code=farm.farm_code) }}" class="farm-button">
+          {{ farm.farm_name }} ({{ farm.farm_code }})
+        </a>
+      {% endfor %}
+    {% else %}
+      <p>No farms added yet.</p>
+    {% endif %}
+
+    <button id="show-form-btn" onclick="toggleForm()">Add New Farm</button>
+
+    <form id="add-farm-form" method="POST" action="">
+      <h2>Add Farm Code</h2>
+      <input type="text" name="farm_name" placeholder="Farm Name" required />
+      <input type="text" name="farm_code" placeholder="Farm Code" required />
+      <button type="submit">Add Farm</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ farm.farm_name }} ({{ place }}) - Customer Types</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      background: #0077cc;
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    .content {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .customer-type-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .type-card {
+      width: 150px;
+      height: 150px;
+      background: #eef6ff;
+      border: 2px solid #0077cc;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      padding: 20px;
+      transition: transform 0.2s ease;
+    }
+    .type-card:hover {
+      transform: scale(1.05);
+      background: #d9edff;
+    }
+    .type-card span.icon {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .back-link {
+      margin-top: 30px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    {{ farm.farm_name }} ({{ farm.farm_code }}) - {{ place }}
+  </header>
+  <div class="content">
+    <h2>Select Customer Type</h2>
+    <div class="customer-type-grid">
+      <div class="type-card" onclick="location.href='{{ url_for('customer_type_page', place=place, farm_code=farm.farm_code, customer_type='Large') }}'">
+        <span class="icon">👑</span>
+        <div>Large Customer</div>
+      </div>
+      <div class="type-card" onclick="location.href='{{ url_for('customer_type_page', place=place, farm_code=farm.farm_code, customer_type='Medium') }}'">
+        <span class="icon">🧑‍🌾</span>
+        <div>Medium Customer</div>
+      </div>
+      <div class="type-card" onclick="location.href='{{ url_for('customer_type_page', place=place, farm_code=farm.farm_code, customer_type='Occasional') }}'">
+        <span class="icon">🌱</span>
+        <div>Occasional Customer</div>
+      </div>
+    </div>
+    <a href="{{ url_for('add_farm', place=place) }}" class="back-link">&larr; Back to Farms</a>
+  </div>
+</body>
+</html>
+
